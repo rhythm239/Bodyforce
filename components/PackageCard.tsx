@@ -1,48 +1,33 @@
-import PackageCard from "@/components/PackageCard";
-import { client, urlFor } from "@/lib/sanity.client";
-import { groq } from "next-sanity";
+// components/PackageCard.tsx
+import Image from 'next/image';
+import Button from './Button';
 
-// This interface defines the shape of our data
-interface Package {
-  _id: string;
+type PackageCardProps = {
   name: string;
   price: string;
-  includedEquipment: string[];
-  imageGallery: any;
-}
+  imageUrl: string;
+  items: string[];
+  whatsappUrl: string;
+};
 
-// Query to fetch all packages
-const packagesQuery = groq`*[_type == "package"]{
-  _id,
-  name,
-  price,
-  includedEquipment,
-  imageGallery,
-}`;
-
-export default async function PackagesPage() {
-  const packages: Package[] = await client.fetch(packagesQuery);
-
-  // --- DEBUGGING LOG ---
-  // This log will appear in your VS Code terminal, not the browser
-  console.log("Data fetched on Packages page:", packages);
-
+const PackageCard = ({ name, price, imageUrl, items, whatsappUrl }: PackageCardProps) => {
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-12">Our Gym Packages</h1>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-        {packages.map((pkg) => (
-          <PackageCard
-            key={pkg._id}
-            name={pkg.name}
-            price={pkg.price}
-            items={pkg.includedEquipment}
-            imageGallery={pkg.imageGallery}
-            whatsappUrl={`https://wa.me/91XXXXXXXXXX?text=I'm+interested+in+the+${encodeURIComponent(pkg.name)}`}
-          />
-        ))}
+    <div className="border rounded-lg overflow-hidden shadow-lg bg-white flex flex-col">
+      <div className="relative w-full h-72">
+        <Image src={imageUrl} alt={name} fill className="object-cover" />
       </div>
-    </main>
+      <div className="p-6 flex flex-col flex-grow">
+        <h3 className="text-2xl font-bold text-gray-800">{name}</h3>
+        <p className="text-3xl font-light text-indigo-600 my-2">{price}</p>
+        <ul className="list-disc list-inside my-4 text-gray-600 space-y-1">
+          {items && items.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+        <div className="mt-auto pt-4">
+          <Button href={whatsappUrl}>Send a message to know more</Button>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default PackageCard;

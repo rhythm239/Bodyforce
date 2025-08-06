@@ -1,3 +1,4 @@
+// components/ProductCard.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -24,5 +25,4 @@ const ProductCard = ({ name, imageUrl, slug }: ProductCardProps) => {
     </Link>
   );
 };
-
 export default ProductCard;

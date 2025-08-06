@@ -1,3 +1,4 @@
+// components/Header.tsx
 import Link from 'next/link';
 
 const Header = () => {
@@ -5,7 +6,7 @@ const Header = () => {
     <header className="w-full px-8 py-4 bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-gray-800">
-          GYM<span className="text-indigo-600">BRAND</span>
+          GYMBRAND<span className="text-indigo-600"></span>
         </Link>
         <nav className="hidden md:flex space-x-6">
           <Link href="/categories/strength" className="text-gray-600 hover:text-indigo-600">Strength</Link>
